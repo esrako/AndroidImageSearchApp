@@ -36,7 +36,7 @@ User stories and features:
 
 * [x] Advanced: Improve the user interface and experiment with image assets and/or styling and coloring. Styling includes creating icons for each screen density size, hiding/customizing action bar etc.
 
-* [x] Optional: Organizing the code through packaging and externalizing all string resources into strings.xml
+* [x] Optional: Organizing the code through packages and externalizing all string resources into strings.xml
 
 * [x] Optional: Improving the performance by using Parcelable interface for Filter and ImageResult models and using ViewHolder pattern for (Staggered)GridView
 
