@@ -40,6 +40,7 @@
 
     <string-array name="colors_array">
         <item>any</item>
+        <item>black</item>
         <item>blue</item>
         <item>brown</item>
         <item>gray</item>
