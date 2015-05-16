@@ -1,6 +1,5 @@
 package com.mycompany.googleimagesearch.activities;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -16,12 +15,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.Toast;
 
+import com.etsy.android.grid.StaggeredGridView;
 import com.loopj.android.http.*;
 import com.mycompany.googleimagesearch.adapters.ImageResultsAdapter;
+import com.mycompany.googleimagesearch.dialogs.FilterDialog;
 import com.mycompany.googleimagesearch.listeners.EndlessScrollListener;
 import com.mycompany.googleimagesearch.models.ImageResult;
 import com.mycompany.googleimagesearch.models.Filter;
@@ -35,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class SearchActivity extends ActionBarActivity implements FilterDialog.FilterDialogListener {
-    private GridView gvResults;
+    private StaggeredGridView sgvResults;
     private ArrayList<ImageResult> imageResults;
     private ImageResultsAdapter aImageResults;
     final int REQUEST_CODE = 10;
@@ -50,14 +49,14 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
         setupViews();
         imageResults = new ArrayList<ImageResult>();
         aImageResults = new ImageResultsAdapter(this, imageResults);
-        gvResults.setAdapter(aImageResults);
+        sgvResults.setAdapter(aImageResults);
         m_filter = new Filter();
     }
 
     private void setupViews(){
         //etQuery = (EditText) findViewById(R.id.etQuery);
-        gvResults = (GridView) findViewById(R.id.gvResults);
-        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        sgvResults = (StaggeredGridView) findViewById(R.id.sgvResults);
+        sgvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(SearchActivity.this, ImageDisplayActivity.class);
@@ -67,7 +66,7 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
             }
         });
         // Attach the listener to the AdapterView onCreate
-        gvResults.setOnScrollListener(new EndlessScrollListener() {
+        sgvResults.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
@@ -83,7 +82,7 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
         // This method probably sends out a network request and appends new data items to your adapter.
         // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
         // Deserialize API response and then construct new objects to append to the adapter
-        //m_page++;
+        // pages coming as 2-8, what I need for my page structure is 1-7
         submitQuery(page-1);
     }
 
@@ -98,6 +97,7 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
             public boolean onQueryTextSubmit(String query) {
                 // perform query here
                 m_query = query;
+                Log.i("DEBUG", "Submitted the following query: " + query);
                 submitQuery(0);
                 searchView.clearFocus();
                 return true;
@@ -116,14 +116,17 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
         int start = page * 8;
 
         if(page>7){//no more results - do nothing
+            Log.i("DEBUG", "Page: " + page);
             Toast.makeText(getApplicationContext(), R.string.end_of_results, Toast.LENGTH_LONG).show();
             return;
         }else{//page 0 to 7, load (more) results
-            Toast.makeText(getApplicationContext(), "Will load page" + page, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "Page: " + page);
+            //Toast.makeText(getApplicationContext(), "Will load page" + page, Toast.LENGTH_LONG).show();
         }
 
         if(!isThereNetworkConnection()){
             //toast the error
+            Log.i("DEBUG", "No internet");
             Toast.makeText(getApplicationContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
         }
         else {
@@ -173,7 +176,8 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "Clicked to settings!", Toast.LENGTH_SHORT).show();
+            Log.i("DEBUG", "Clicked to Settings");
+            //Toast.makeText(this, "Clicked to settings!", Toast.LENGTH_SHORT).show();
             /*Intent i = new Intent(SearchActivity.this, SetFiltersActivity.class);
             i.putExtra("filter", m_filter);
             startActivityForResult(i, REQUEST_CODE);*/
@@ -186,21 +190,22 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if(requestCode== REQUEST_CODE && resultCode == RESULT_OK){
-            m_filter = (Filter) data.getSerializableExtra("filter");
-            Toast.makeText(this, m_filter.toString(), Toast.LENGTH_SHORT).show();
+            m_filter = (Filter) data.getParcelableExtra("filter");
+            Log.i("DEBUG", "onActivityResult: got the filter back");
+            //Toast.makeText(this, m_filter.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
     private String applyFilters(String url, Filter filter, int start){
         Log.i("DEBUG", url);
         StringBuilder sb = new StringBuilder(url);
-        if(!filter.size.equals("")){
+        if(!filter.size.equals("") && !filter.size.equals("any")){
             sb.append("&imgsz=" + filter.size);
         }
-        if(!filter.color.equals("")){
+        if(!filter.color.equals("") && !filter.color.equals("any")){
             sb.append("&imgcolor=" + filter.color);
         }
-        if(!filter.type.equals("")){
+        if(!filter.type.equals("") && !filter.type.equals("any")){
             sb.append("&imgtype=" + filter.type);
         }
         if(!filter.site.equals("")){
@@ -238,7 +243,8 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
 
     @Override
     public void onFinishFilterDialog(Filter filter) {
-        Toast.makeText(this, "Dialog returning filter: " + filter.toString(), Toast.LENGTH_SHORT).show();
         m_filter = filter;
+        Log.i("DEBUG", "onFinishFilterDialog: got the filter back");
+        //Toast.makeText(this, "Dialog returning filter: " + filter.toString(), Toast.LENGTH_SHORT).show();
     }
 }

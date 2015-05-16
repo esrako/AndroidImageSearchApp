@@ -31,6 +31,7 @@
 
 
     <string-array name="sizes_array">
+        <item>any</item>
         <item>small</item>
         <item>medium</item>
         <item>large</item>
@@ -38,6 +39,7 @@
     </string-array>
 
     <string-array name="colors_array">
+        <item>any</item>
         <item>blue</item>
         <item>brown</item>
         <item>gray</item>
@@ -52,6 +54,7 @@
     </string-array>
 
     <string-array name="types_array">
+        <item>any</item>
         <item>face</item>
         <item>photo</item>
         <item>clipart</item>

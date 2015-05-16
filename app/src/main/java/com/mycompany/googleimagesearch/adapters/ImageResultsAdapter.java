@@ -23,22 +23,33 @@ public class ImageResultsAdapter extends ArrayAdapter<ImageResult> {
         super(context, R.layout.item_image_result, images);
     }
 
+    private class ViewHolder{
+        ImageView ivImage;
+        TextView tvTitle;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageResult imageInfo = getItem(position);
+        ViewHolder viewHolder;
         if(convertView==null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_image_result, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.ivImage = (ImageView) convertView.findViewById(R.id.ivImage);
+            viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+            convertView.setTag(viewHolder);
         }
-        ImageView ivImage = (ImageView) convertView.findViewById(R.id.ivImage);
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+        else{
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
         //clear out the image
-        ivImage.setImageResource(0);
-        tvTitle.setText(Html.fromHtml(imageInfo.title));
+        viewHolder.ivImage.setImageResource(0);
+        viewHolder.tvTitle.setText(Html.fromHtml(imageInfo.title));
 
         Picasso.with(getContext())
                 .load(imageInfo.thumbUrl)
-                .into(ivImage);
+                .into(viewHolder.ivImage);
 
         return convertView;
     }

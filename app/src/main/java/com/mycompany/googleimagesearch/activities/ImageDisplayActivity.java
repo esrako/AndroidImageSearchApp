@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.mycompany.googleimagesearch.R;
 import com.mycompany.googleimagesearch.models.ImageResult;
+import com.ortiz.touch.TouchImageView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -33,24 +35,37 @@ public class ImageDisplayActivity extends ActionBarActivity {
 
         getSupportActionBar().hide();
 
-        ImageResult ir = (ImageResult) getIntent().getSerializableExtra("result");
-        ImageView ivFullImage = (ImageView) findViewById(R.id.ivFullImage);
+        ImageResult ir = (ImageResult) getIntent().getParcelableExtra("result");
+        //TouchImageView tivFullImage = (TouchImageView) findViewById(R.id.tivFullImage);
+        ImageView tivFullImage = (ImageView) findViewById(R.id.tivFullImage);
+
         Picasso.with(this)
                 .load(ir.fullUrl)
-                .fit().centerInside()
-                .into(ivFullImage);
+                .fit().centerInside()//esra
+        //        .into(tivFullImage);
+        .into(tivFullImage, new Callback() {
+            @Override
+            public void onSuccess() {
+                // Setup share intent now that image has loaded
+                Toast.makeText(ImageDisplayActivity.this, "Loaded", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError() {
+                // ...
+                Toast.makeText(ImageDisplayActivity.this, "Not loaded", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Toast.makeText(this, "image loaded?", Toast.LENGTH_SHORT).show();
     }
 
     public void onShareImage(View view){
 
         // Get access to bitmap image from view
-        ImageView ivFullImage = (ImageView) findViewById(R.id.ivFullImage);
- /*       Drawable mDrawable = siv.getDrawable();
-        Bitmap mBitmap = ((BitmapDrawable)mDrawable).getBitmap();
+        ImageView tivFullImage = (ImageView) findViewById(R.id.tivFullImage);
 
-        String path = MediaStore.Images.Media.insertImage(getContentResolver(), mBitmap, "Image Description", null);
-*/
-        Uri uri = getLocalBitmapUri(ivFullImage);
+        Uri uri = getLocalBitmapUri(tivFullImage);
 
         if (uri != null) {
             // Construct a ShareIntent with link to image

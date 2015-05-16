@@ -30,7 +30,7 @@ public class SetFiltersActivity extends ActionBarActivity {
         setContentView(R.layout.activity_set_filters);
 
         //extract data
-        m_filter = (Filter) getIntent().getSerializableExtra("filter");
+        m_filter = (Filter) getIntent().getParcelableExtra("filter");
 
         setupViews();
         addListenerOnButton();

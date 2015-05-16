@@ -1,22 +1,20 @@
-package com.mycompany.googleimagesearch.activities;
+package com.mycompany.googleimagesearch.dialogs;
 
 /**
  * Created by ekucukog on 5/14/2015.
  */
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.Toast;
 
 import com.mycompany.googleimagesearch.R;
 import com.mycompany.googleimagesearch.models.Filter;
@@ -43,7 +41,7 @@ public class FilterDialog extends DialogFragment {
         FilterDialog frag = new FilterDialog();
         Bundle args = new Bundle();
         args.putString("title", title);
-        args.putSerializable("filter", filter);
+        args.putParcelable("filter", filter);
         frag.setArguments(args);
         return frag;
     }
@@ -61,7 +59,7 @@ public class FilterDialog extends DialogFragment {
         //getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         //extract data
-        m_filter = (Filter) getArguments().getSerializable("filter");
+        m_filter = (Filter) getArguments().getParcelable("filter");
 
         setupViews(view);
         addListenerOnButton(view);
@@ -83,7 +81,6 @@ public class FilterDialog extends DialogFragment {
         setSpinnerToValue(spinnerFilterType, m_filter.type);
     }
 
-    //is this going to work?Yes
     public void setSpinnerToValue(Spinner spinner, String value) {
         int index = 0;
         SpinnerAdapter adapter = spinner.getAdapter();
@@ -103,7 +100,6 @@ public class FilterDialog extends DialogFragment {
             public void onClick(View v) {
                 // 1. Get the fields
 
-                //is this correct?Yes
                 String size  = spinnerFilterSize.getSelectedItem().toString();
                 String color  = spinnerFilterColor.getSelectedItem().toString();
                 String type  = spinnerFilterType.getSelectedItem().toString();
@@ -124,8 +120,8 @@ public class FilterDialog extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(parent.getContext(), "OnItemSelectedListener for Size : " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-
+                Log.i("DEBUG", "Spinner listener: " + parent.getItemAtPosition(position).toString());
+                //Toast.makeText(parent.getContext(), "OnItemSelectedListener for Size : " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -139,8 +135,8 @@ public class FilterDialog extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(parent.getContext(),"OnItemSelectedListener for Color : " + parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
-
+                Log.i("DEBUG", "Spinner listener: " + parent.getItemAtPosition(position).toString());
+                //Toast.makeText(parent.getContext(),"OnItemSelectedListener for Color : " + parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -154,8 +150,8 @@ public class FilterDialog extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(parent.getContext(),"OnItemSelectedListener for Type : " + parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
-
+                Log.i("DEBUG", "Spinner listener: " + parent.getItemAtPosition(position).toString());
+                //Toast.makeText(parent.getContext(),"OnItemSelectedListener for Type : " + parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
             }
 
             @Override
