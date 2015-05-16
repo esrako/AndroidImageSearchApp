@@ -26,7 +26,7 @@ User stories and features:
 
 * [x] Required: User can scroll down “infinitely” to continue loading more image results (up to 8 pages)
 
-* [x] Advanced: Robust error handling, check if internet is available, handle error cases, network failures. Toast message in case of mentioned error cases.
+* [x] Advanced: Robust error handling, check if internet is available, handle error cases, network failures. Show Toast messages in case of mentioned error cases.
 
 * [x] Advanced: Use the ActionBar SearchView as the query box instead of an EditText
 
@@ -44,7 +44,7 @@ User stories and features:
 
 * [x] Bonus: (In-Progress)User can zoom or pan images displayed in full-screen detail view
 
-Example layout of an Instagram Photo in this app:
+Screenshots from the app:
 
 ![alt tag](https://github.com/esrako/AndroidInstagramClient/blob/master/photo.png)
 
