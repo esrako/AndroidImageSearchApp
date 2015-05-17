@@ -9,9 +9,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -36,28 +38,27 @@ public class ImageDisplayActivity extends ActionBarActivity {
         getSupportActionBar().hide();
 
         ImageResult ir = (ImageResult) getIntent().getParcelableExtra("result");
-        //TouchImageView tivFullImage = (TouchImageView) findViewById(R.id.tivFullImage);
-        ImageView tivFullImage = (ImageView) findViewById(R.id.tivFullImage);
+        TouchImageView tivFullImage = (TouchImageView) findViewById(R.id.tivFullImage);
+        final Button btShare = (Button) findViewById(R.id.btShare);
 
         Picasso.with(this)
                 .load(ir.fullUrl)
-                .fit().centerInside()//esra
-        //        .into(tivFullImage);
-        .into(tivFullImage, new Callback() {
+                .placeholder(R.drawable.placeholder)// do not remove placeholder
+                .fit().centerInside().into(tivFullImage, new Callback() {
             @Override
             public void onSuccess() {
                 // Setup share intent now that image has loaded
-                Toast.makeText(ImageDisplayActivity.this, "Loaded", Toast.LENGTH_SHORT).show();
+                btShare.setVisibility(View.VISIBLE);
+                Log.i("DEBUG", getResources().getString(R.string.image_load_succeded));
+                //Toast.makeText(ImageDisplayActivity.this, "Loaded", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError() {
-                // ...
-                Toast.makeText(ImageDisplayActivity.this, "Not loaded", Toast.LENGTH_SHORT).show();
+                Log.i("DEBUG", getResources().getString(R.string.image_load_failed));
+                Toast.makeText(ImageDisplayActivity.this, getResources().getString(R.string.image_load_failed), Toast.LENGTH_SHORT).show();
             }
         });
-
-        Toast.makeText(this, "image loaded?", Toast.LENGTH_SHORT).show();
     }
 
     public void onShareImage(View view){

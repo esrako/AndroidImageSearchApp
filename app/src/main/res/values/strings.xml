@@ -17,6 +17,8 @@
     <string name="no_internet">There is no internet connection!</string>
     <string name="end_of_results">End of Google results</string>
     <string name="share_image_failed">Sharing of the image failed</string>
+    <string name="image_load_failed">Failed to load the image</string>
+    <string name="image_load_succeded">Success loading the image</string>
 
     <string name="sizes_prompt">Pick a size</string>
     <string name="colors_prompt">Pick a color</string>
