@@ -50,5 +50,5 @@ Screenshots from the app:
 
 Walkthrough:
 
-![alt tag](https://github.com/esrako/AndroidInstagramClient/blob/master/project2.gif)
+![alt tag](https://github.com/esrako/AndroidInstagramClient/blob/master/project2_01.gif)
 
