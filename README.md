@@ -46,9 +46,9 @@ User stories and features:
 
 Screenshots from the app:
 
-![alt tag](https://github.com/esrako/AndroidInstagramClient/blob/master/photo.png)
+![alt tag](AndroidImageSearchApp/photo.png)
 
 Walkthrough:
 
-![alt tag](https://github.com/esrako/AndroidInstagramClient/blob/master/project2_01.gif)
+![alt tag](AndroidImageSearchApp/project2_01.gif)
 
