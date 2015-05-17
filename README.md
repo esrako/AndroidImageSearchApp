@@ -46,7 +46,13 @@ User stories and features:
 
 Screenshots from the app:
 
-![alt tag](https://github.com/esrako/AndroidImageSearchApp/blob/master/photo.png)
+![alt tag](https://github.com/esrako/AndroidImageSearchApp/blob/master/p2_filter.png)
+
+![alt tag](https://github.com/esrako/AndroidImageSearchApp/blob/master/p2_staggeredgv.png)
+
+![alt tag](https://github.com/esrako/AndroidImageSearchApp/blob/master/p2_display.png)
+
+![alt tag](https://github.com/esrako/AndroidImageSearchApp/blob/master/p2_share.png)
 
 Walkthrough:
 
