@@ -46,9 +46,9 @@ User stories and features:
 
 Screenshots from the app:
 
-![alt tag](AndroidImageSearchApp/photo.png)
+![alt tag](https://github.com/esrako/AndroidImageSearchApp/blob/master/photo.png)
 
 Walkthrough:
 
-![alt tag](AndroidImageSearchApp/project2_01.gif)
+![alt tag](https://github.com/esrako/AndroidImageSearchApp/blob/master/project2_01.gif)
 
