@@ -42,7 +42,7 @@ User stories and features:
 
 * [x] Bonus: Use the StaggeredGridView to display improve the grid of image results
 
-* [x] Bonus: (In-Progress)User can zoom or pan images displayed in full-screen detail view
+* [x] Bonus: User can zoom or pan images displayed in full-screen detail view
 
 Screenshots from the app:
 
